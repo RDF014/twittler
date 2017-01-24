@@ -21,10 +21,10 @@ $(document).ready(function(){
     //access nested object that holds user, tweet, and time
     var $section = $('<section></section>')
     var tweet = streams.home[index];
-    var $user = $('<h3>@'+tweet.user+'</h3>');
+    var $user = $('<h3><a href=\"#\">@'+tweet.user+'</a></h3>');
     var $timeCreate = $('<h6>'+ tweet.created_at +'</h6>');
-    var $tweet = $('<p></p>');
-    $tweet.text(tweet.message);
+    var $tweet = $('<p>'+ tweet.message +'</p>');
+    // $tweet.text(tweet.message);
 
     $section.appendTo($body);
     $user.appendTo($section);
