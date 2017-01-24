@@ -5,11 +5,11 @@ $(document).ready(function(){
   var title = $('<h1>Twittler</h1>');
   $('body').prepend(title);
 
-  var d = new Date();
+  // var d = new Date();
   // var hours = d.getHours();
   // var minutes = d.getMinutes();
   // var sec = d.getSeconds();
-  var time = d.toLocaleTimeString();
+  // var time = d.toLocaleTimeString();
   // var time = hours + ':' + minutes + ' ' + sec;
   // var $time = $('<b></b>');
   // $time.text(time);
@@ -18,12 +18,19 @@ $(document).ready(function(){
 
   var index = streams.home.length - 1;
   while(index >= 0){
+    //access nested object that holds user, tweet, and time
+    var $section = $('<section></section>')
     var tweet = streams.home[index];
-    var $tweet = $('<div></div>');
-    $tweet.text('@' + tweet.user + ': ' + tweet.message + ' ' + time);
-    $tweet.appendTo($body);
-    // $('div').first().append($time);
-    // $time.appendTo('div').first()
+    var $user = $('<h3>@'+tweet.user+'</h3>');
+    var $timeCreate = $('<h6>'+ tweet.created_at +'</h6>');
+    var $tweet = $('<p></p>');
+    $tweet.text(tweet.message);
+
+    $section.appendTo($body);
+    $user.appendTo($section);
+    $timeCreate.appendTo($section)
+    $tweet.appendTo($section);
+
     index -= 1;
   }
 
