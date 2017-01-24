@@ -5,12 +5,14 @@ $(document).ready(function(){
   var title = $('<h1>Twittler</h1>');
   $('body').prepend(title);
 
-
   var d = new Date();
-  var hours = d.getHours() - 12;
-  var minutes = d. getMinutes();
-  var time = hours + ':' + minutes;
-
+  // var hours = d.getHours();
+  // var minutes = d.getMinutes();
+  // var sec = d.getSeconds();
+  var time = d.toLocaleTimeString();
+  // var time = hours + ':' + minutes + ' ' + sec;
+  // var $time = $('<b></b>');
+  // $time.text(time);
 
 
 
@@ -20,6 +22,8 @@ $(document).ready(function(){
     var $tweet = $('<div></div>');
     $tweet.text('@' + tweet.user + ': ' + tweet.message + ' ' + time);
     $tweet.appendTo($body);
+    // $('div').first().append($time);
+    // $time.appendTo('div').first()
     index -= 1;
   }
 
