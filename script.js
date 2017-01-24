@@ -5,15 +5,6 @@ $(document).ready(function(){
   var title = $('<h1>Twittler</h1>');
   $('body').prepend(title);
 
-  // var d = new Date();
-  // var hours = d.getHours();
-  // var minutes = d.getMinutes();
-  // var sec = d.getSeconds();
-  // var time = d.toLocaleTimeString();
-  // var time = hours + ':' + minutes + ' ' + sec;
-  // var $time = $('<b></b>');
-  // $time.text(time);
-
   var index = streams.home.length - 1;
   while(index >= 0){
     var $section = $('<section class=\"userName\"></section>');
@@ -49,7 +40,7 @@ $(document).ready(function(){
     index -= 1;
   }
 
-  $('.userName').on('click', function(){
+  $('.userName').on('click', function(event){
     event.preventDefault();
     $(this).find('ul').fadeToggle();
   })
