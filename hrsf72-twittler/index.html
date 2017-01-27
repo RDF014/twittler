@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <script src="jquery.js"></script>
+    <script src="data_generator.js"></script>
+    <link rel="stylesheet" href="stylesheets.css">
+
+  </head>
+  <body>
+    <h1>Twittler</h1>
+    <!-- <button type="button">New Tweets</button> -->
+    <section>Your Tweets</section>
+
+    <section class="tweet-feed"></section>
+
+    <aside class="history-feed">History</aside>
+
+    <script>
+      //add divider on right side for history of tweets (live feed)
+
+
+
+      $(document).ready(function(){
+        var $body = $('body');
+        // $body.html('');
+
+        // var $button = $('<button>New Tweets</button>')
+        // $button.prependTo($body);
+
+        //var myFunction = function{};
+        //setInterval(myFunction, 1000);  calls myfunction every 1000ms (1sec)
+
+
+        var index = 0
+        function showTweets() {
+          while(index <= streams.home.length - 1){
+            var tweet = streams.home[index];
+
+            var $tweet = $('<div class="tweet"></div>');
+            var $username = tweet.user;
+            var message = tweet.message;
+            var timestamp = tweet.created_at.toString().slice(0, 24);
+
+            // $tweet.append('@');
+            $tweet.append('<h3>@<a class="user-name">'+ $username + '</a>:</h3>');
+            $tweet.append('<p class="message">' + message + '</p>');
+            $tweet.append('<h6 class="timestamp"> @' + timestamp + '</h6>');
+            // $tweet.append('<section></section>');
+
+            $tweet.prependTo('.tweet-feed');
+            index++;
+          }
+          //limits number of tweets to 20 shown
+          $('div').slice(20).remove();
+        }
+
+        showTweets();
+        //automatically updates the tweets every 5s
+        // setInterval(showTweets, 5000);
+
+        // $button.on('click', function() {
+        //   showTweets();
+        // });
+
+
+        //show history event handler
+        $('body').on('click', '.user-name', function(e) {
+          e.preventDefault();
+
+          //to get the clicked username, have 2 options:
+          // 2) $(this)[0].text()
+          // console.log($(this)[0].text);
+          // 1) use e.target
+          // console.log(e.target);
+          // var $follower = e.target;
+          // var $follower = $(e.target).text();
+          // pastTweets($follower);
+
+          var username = $(e.target).text();
+          var user = streams.users[username];
+          var pastIndex = user.length - 1;
+
+          $('.pastTweet').remove();
+          while(0 <= pastIndex) {
+
+            var timestamp = user[pastIndex].created_at.toString().slice(0, 24);
+            var tweet = user[pastIndex].message;
+            var $tweet = $('<section class="pastTweet"></section>');
+
+            $tweet.append('<p class="message">' + tweet + '</p>');
+            $tweet.append('<h6 class="timestamp"> @' + timestamp + '</h6>')
+
+
+            $('.history-feed').append($tweet);
+            pastIndex--
+          }
+          // $tweet.fadeToggle();
+
+          //limits number of past history tweets from a user to 20
+         $('.pastTweet').slice(20).remove();
+        });
+
+      });
+
+    </script>
+  </body>
+</html>
