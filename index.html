@@ -1,11 +1,75 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <script src="data_generator.js"></script>
     <script src="jquery.js"></script>
-    <link rel="stylesheet" href="stylesheet.css">
+    <script src="data_generator.js"></script>
+    <link rel="stylesheet" href="stylesheets.css">
+
   </head>
   <body>
-    <script src="script.js"></script>
+    <h1 align="center">Twittler</h1>
+    <section class="tweet-feed"></section>
+    <aside class="history-feed"></aside>
+    <script>
+
+      $(document).ready(function(){
+        var $body = $('body');
+        // $body.html('');
+
+        var index = 0
+        function showTweets() {
+          while(index <= streams.home.length - 1){
+            var tweet = streams.home[index];
+
+            var $tweet = $('<div class="tweet"></div>');
+            var $username = tweet.user;
+            var message = tweet.message;
+            var timestamp = tweet.created_at.toString().slice(0, 24);
+
+            $tweet.append('<h3>@<a class="user-name">'+ $username + '</a>:</h3>');
+            $tweet.append('<p class="message">' + message + '</p>');
+            $tweet.append('<h6 class="timestamp"> @' + timestamp + '</h6>');
+
+            $tweet.prependTo('.tweet-feed');
+            index++;
+          }
+          //limits number of tweets to 20 shown
+          $('div').slice(20).remove();
+        }
+
+        showTweets();
+        //automatically updates the tweets every 5s
+        setInterval(showTweets, 3000);
+
+
+        //show history event handler
+        $('body').on('click', '.user-name', function(e) {
+
+          username = $(e.target).text();
+          var user = streams.users[username];
+          var pastIndex = user.length - 1;
+          $('.user-history').remove();
+          $('.history-feed').prepend('<h2 class="user-history ">@<a class="user-name">' + username + '</a></h2>');
+
+          $('.past-tweet').remove();
+          while(0 <= pastIndex) {
+
+            var timestamp = user[pastIndex].created_at.toString().slice(0, 24);
+            var tweet = user[pastIndex].message;
+            var $tweet = $('<section class="past-tweet"></section>');
+
+            $tweet.append('<p class="message">' + tweet + '</p>');
+            $tweet.append('<h6 class="timestamp"> @' + timestamp + '</h6>')
+
+            $('.history-feed').append($tweet);
+            pastIndex--
+          }
+
+          //limits number of past history tweets from a user to 20
+         $('.past-tweet').slice(20).remove();
+        });
+      });
+
+    </script>
   </body>
 </html>
